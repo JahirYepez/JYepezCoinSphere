@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -71,56 +72,92 @@ fun HomeScreen(){
             )
         }
         // Cards
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
-                //.weight(1f)
-        ) {
-            items(cardsList){ cards ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(Surface)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(15.dp)
-                    ) {
-                        Text(
-                            text = cards.title,
-                            fontSize = 14.sp,
-                            color = TextDim
-                        )
-                        Text(
-                            text = cards.information,
-                            fontSize = 19.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = TextMain,
-                            modifier = Modifier
-                                .padding(top = 4.dp)
-                        )
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
+        Cards()
+        // Coins
+        titleCoins()
+    }
+}
 
+@Composable
+fun Cards(){
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp)
+        //.weight(1f)
+    ) {
+        items(cardsList){ cards ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Surface)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(15.dp)
+                ) {
+                    Text(
+                        text = cards.title,
+                        fontSize = 14.sp,
+                        color = TextDim
+                    )
+                    Text(
+                        text = cards.information,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextMain,
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                    )
                 }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun titleCoins(){
+    Column(
+        modifier = Modifier
+            .padding(top = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = "#",
+                color = TextDim,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .weight(1f)
+            )
+            Text(
+                text = "Name",
+                color = TextDim,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .weight(6f)
+            )
+            Text(
+                text = "Price",
+                color = TextDim,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .weight(4f),
+
+                )
+        }
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
