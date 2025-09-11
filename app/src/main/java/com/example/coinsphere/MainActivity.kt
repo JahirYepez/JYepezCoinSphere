@@ -52,6 +52,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Considero que la distribucion pudo ser mejor optimizada con
+// weight, y eso puede notarse en el codigo que hay partes
+// comentadas.
+
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier){
     Column(
@@ -61,45 +65,29 @@ fun HomeScreen(modifier: Modifier = Modifier){
             .padding(20.dp)
     ) {
         // Titulo
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                //posible padding
-                //.weight(1f)
-        ) {
-            Text(
-                text = "CoinSphere",
-                color = Color.White,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        Title()
         // Cards
         Cards()
         // Coins
-        titleCoins()
-        LazyColumn {
-            items(coinsList){ coins ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp)
-                        .height(40.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(Surface)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(10.dp)
-                    ) {
-                        AsyncImage(
-                            model = coins.image,
-                            contentDescription = coins.title
-                        )
-                    }
-                }
-            }
-        }
+        Coins()
+    }
+}
+
+@Composable
+fun Title(){
+    // Titulo
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+        //posible padding
+        //.weight(1f)
+    ) {
+        Text(
+            text = "CoinSphere",
+            color = Color.White,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -167,25 +155,80 @@ fun titleCoins(){
             Text(
                 text = "#",
                 color = TextDim,
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 modifier = Modifier
                     .weight(1f)
             )
             Text(
                 text = "Name",
                 color = TextDim,
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 modifier = Modifier
                     .weight(6f)
             )
             Text(
                 text = "Price",
                 color = TextDim,
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 modifier = Modifier
                     .weight(4f),
 
                 )
+        }
+    }
+}
+
+@Composable
+fun Coins(){
+    titleCoins()
+    LazyColumn {
+        items(coinsList){ coins ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .height(40.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Surface)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(
+                            start = 12.dp,
+                            top = 6.dp,
+                            end = 6.dp,
+                            bottom = 12.dp
+                        )
+                ) {
+                    Text(
+                        text = "${coins.position}",
+                        color = TextDim,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                    )
+                    AsyncImage(
+                        model = coins.image,
+                        contentDescription = coins.title,
+                        modifier = Modifier
+                            .padding(top = 3.dp, end = 10.dp)
+                    )
+                    Text(
+                        text = coins.title,
+                        color = TextMain,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .weight(4f)
+                    )
+                    Text(
+                        text = coins.price,
+                        color = TextMain,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .weight(3f)
+                    )
+                }
+            }
         }
     }
 }
