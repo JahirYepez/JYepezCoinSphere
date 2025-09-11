@@ -27,8 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.example.coinsphere.models.CardsItem
+import com.example.coinsphere.models.CoinsItem
 import com.example.coinsphere.models.cardsList
+import com.example.coinsphere.models.coinsList
 import com.example.coinsphere.ui.theme.Background
 import com.example.coinsphere.ui.theme.CoinSphereTheme
 import com.example.coinsphere.ui.theme.Surface
@@ -42,7 +45,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoinSphereTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    //
+                    HomeScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -50,9 +53,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(modifier: Modifier = Modifier){
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Background)
             .padding(20.dp)
@@ -75,6 +78,28 @@ fun HomeScreen(){
         Cards()
         // Coins
         titleCoins()
+        LazyColumn {
+            items(coinsList){ coins ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Surface)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(10.dp)
+                    ) {
+                        AsyncImage(
+                            model = coins.image,
+                            contentDescription = coins.title
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -131,7 +156,12 @@ fun titleCoins(){
     ) {
         Row(
             modifier = Modifier
-                .padding(10.dp),
+                .padding(
+                    start = 10.dp,
+                    end = 10.dp,
+                    top = 5.dp,
+                    bottom = 5.dp
+                ),
             horizontalArrangement = Arrangement.End
         ) {
             Text(
