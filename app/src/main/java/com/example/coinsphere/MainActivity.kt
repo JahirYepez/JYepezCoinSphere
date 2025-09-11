@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +30,9 @@ import com.example.coinsphere.models.CardsItem
 import com.example.coinsphere.models.cardsList
 import com.example.coinsphere.ui.theme.Background
 import com.example.coinsphere.ui.theme.CoinSphereTheme
+import com.example.coinsphere.ui.theme.Surface
+import com.example.coinsphere.ui.theme.TextDim
+import com.example.coinsphere.ui.theme.TextMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +61,7 @@ fun HomeScreen(){
             modifier = Modifier
                 .fillMaxWidth()
                 //posible padding
-                .weight(1f)
+                //.weight(1f)
         ) {
             Text(
                 text = "CoinSphere",
@@ -68,9 +74,36 @@ fun HomeScreen(){
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 12.dp)
                 //.weight(1f)
         ) {
             items(cardsList){ cards ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Surface)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(15.dp)
+                    ) {
+                        Text(
+                            text = cards.title,
+                            fontSize = 14.sp,
+                            color = TextDim
+                        )
+                        Text(
+                            text = cards.information,
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TextMain,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                        )
+                    }
+                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
